@@ -1,0 +1,25 @@
+version: "3"
+services:
+  gateway:
+    build: ./Envoy
+    ports:
+      - "9901:9901"
+      - "10000:10000"
+    volumes: 
+      - "./Envoy/envoy.yaml:/etc/envoy/envoy.yaml"
+  coffeeapi: 
+    build: ./CofeeAPI/
+    ports: 
+      - "8080:80"
+    environment: 
+      ASPNETCORE_URLS: "HTTP://+:80"
+      ASPNETCORE_HTTPS_PORT: "443"
+      ASPNETCORE_ENVIRONMENT: "Development"
+  teaapi: 
+    build: ./TeaAPI/
+    ports: 
+      - "8081:80"
+    environment:
+      ASPNETCORE_URLS: "HTTP://+:80"
+      ASPNETCORE_HTTPS_PORT: "443"
+      ASPNETCORE_ENVIRONMENT: "Development"
